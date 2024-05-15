@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-def create_features(df: pd.DataFrame, label: str = None) -> pd.DataFrame:
+def create_features(df: pd.DataFrame) -> pd.DataFrame:
     """
     Функція для створення нових ознак
 
@@ -17,10 +17,8 @@ def create_features(df: pd.DataFrame, label: str = None) -> pd.DataFrame:
     df['quarter'] = df['date'].dt.quarter
     df['month'] = df['date'].dt.month
     df['dayofmonth'] = df['date'].dt.day
-    df['weekofyear'] = df['date'].dt.weekofyear
+    df['weekofyear'] = df['date'].dt.isocalendar().week
 
     X = df[['dayofweek', 'quarter', 'month', 'dayofmonth', 'weekofyear', 'category_id', 'sales_price']]
-    if label:
-        y = df[label]
-        return X, y
+
     return X
